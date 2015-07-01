@@ -1,0 +1,40 @@
+<!--
+<html>
+    <head>
+        {% if title %}
+        <title>{{title}} - microblog</title>
+        {% else %}
+        <title>Welcome to microblog</title>
+        {% endif %}
+    </head>
+    <body>
+         <h1>Hello, {{user.nickname}}</h1>
+         {% for post in posts %}
+         <p>
+             {{post.author.nickname}} says: <b>{{post.body}}</b>
+         </p>
+         {% endfor %}
+        <hr/>
+         {% for item in posts %}
+            {% for key,value in item.items() %}
+                {% if key == 'author' %}
+                <li>{{value.nickname}}</li>
+                {% else %}
+                {{value}}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </body>
+</html>
+ -->
+ {% extends 'base.html' %}
+ {% block content %}
+<h1>Hi, {{user.nickname}}!</h1>
+{% for post in posts %}
+<div class="">
+    <p>
+        {{post.author.nickname}} says: <b>{{post.body}}</b>
+    </p>
+</div>
+{% endfor %}
+{% endblock %}
