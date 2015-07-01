@@ -1,7 +1,7 @@
 from app import app, db, lm, oid
 #the second app means the created object
 from flask import render_template, flash, redirect, session, url_for,g
-from flask.ext.login import login_user, current_user, login_required
+from flask.ext.login import login_user, current_user, login_required, logout_user
 from forms import LoginForm
 from models import User
 
@@ -65,3 +65,17 @@ def load_user(id):
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/user/<nickname>')
+@login_required
+def user(nickname):
+    user = User.query.filter_by(nickname = nickname).first()
+    if user == None:
+        flash('User %s not found.' %nickname)
+        return redirect(url_for('index'))
+    posts = [
+        {'author': user, 'body': 'Test post #1'},
+        {'author': user, 'body': 'Test post #2'}
+    ]
+    return render_template('user.html', user = user, posts = posts)
